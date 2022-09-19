@@ -5,17 +5,25 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import kotlinx.coroutines.*
+import com.example.android_frontend_tennis.api.ServiceManager
+import com.example.android_frontend_tennis.api.auth.AuthResult
+import com.example.android_frontend_tennis.api.auth.AuthService
+import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.delay
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity(){
 //    private lateinit var tfHello:TextView
 //    private lateinit var btn:Button
 //    private lateinit var loginButton:View;
     private var isLoading:Boolean = false;
     private lateinit var pbMain:ProgressBar
+
+    private lateinit var authService:AuthService;
+
 
 //    private val service = PostsService.create()
 //    private var posts = emptyList<PostResponse>()
@@ -24,55 +32,41 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        authService = ServiceManager.getAuthService(getPreferences(MODE_PRIVATE))
         pbMain = findViewById(R.id.pbMain)
 
         pbMain.visibility = View.VISIBLE;
-        val handler = Handler()
-            handler.postDelayed(Runnable {
-                pbMain.visibility = View.GONE
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
 
-            },3000)
 
-//        tfHello = findViewById(R.id.tfHello)
-//        btn = findViewById(R.id.button)
-//        btn.setOnClickListener(this)
-//        loginButton = findViewById(R.id.LoginBtn)
-//        tfHello.text = isLoading.toString()
-//        val progressButton = ProgressButton(this@MainActivity,loginButton,"Войти")
+//        val handler = Handler()
+//            handler.postDelayed(Runnable {
+//                pbMain.visibility = View.GONE
+//                val intent = Intent(this, LoginActivity::class.java)
+//                startActivity(intent)
 //
-//        loginButton.setOnClickListener(View.OnClickListener { v->
-//            progressButton.buttonActivated()
-//            val handler = Handler()
-//            handler.postDelayed(Runnable { progressButton.buttonFinished() },3000)
-//        })
+//            },3000)
 
         lifecycleScope.launchWhenCreated {
+            while (true){
+                var result = authService.authenticate()
+                when(result){
+                    is AuthResult.Authorized ->{
 
-
-
-//        getPosts()
-
-
+                        pbMain.visibility = View.GONE
+                        break;
+                    }
+                    is AuthResult.Unauthorized -> {
+                        pbMain.visibility = View.GONE
+                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        break;
+                    }
+                    is AuthResult.UnknownError ->{
+                        Toast.makeText(this@MainActivity,"Проверьте интернет-соединение",Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
         }
-    }
-
-    suspend fun getPosts(){
-//        coroutineScope {
-//            launch {
-                isLoading = true;
-//                tfHello.text = isLoading.toString()
-        delay(2000)
-             //   service.getPosts();
-                isLoading = false;
-//            }}
-    }
-
-    override fun onClick(p0: View?) {
-        isLoading = !isLoading;
-//        tfHello.text = isLoading.toString()
     }
 
 
