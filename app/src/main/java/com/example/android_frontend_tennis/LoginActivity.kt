@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener(View.OnClickListener { v->
 
             if (!validateForm()) return@OnClickListener;
-//            progressButton.buttonActivated()
+            progressButton.buttonActivated()
 //            val handler = Handler()
 //            handler.postDelayed(Runnable { progressButton.buttonFinished() },3000)
             lifecycleScope.launch{

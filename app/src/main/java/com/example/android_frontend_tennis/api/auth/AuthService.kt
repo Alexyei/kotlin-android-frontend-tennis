@@ -1,7 +1,7 @@
 package com.example.android_frontend_tennis.api.auth
 
-import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import android.util.Log
 import com.example.android_frontend_tennis.api.RetrofitInstance
 import retrofit2.HttpException
 
@@ -22,10 +22,11 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
             if(e.code() == 401) {
                 AuthResult.Unauthorized()
             } else {
-                AuthResult.UnknownError(e.message)
+                AuthResult.UnknownError(e.response()?.errorBody()?.string())
             }
         } catch (e: Exception) {
-            AuthResult.UnknownError(e.message)
+
+            AuthResult.UnknownError("Не удалось подключиться к серверу")
         }
     }
 
@@ -42,13 +43,15 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
                 .apply()
             AuthResult.Authorized()
         } catch(e: HttpException) {
+
             if(e.code() == 401) {
                 AuthResult.Unauthorized()
             } else {
-                AuthResult.UnknownError(e.message)
+                AuthResult.UnknownError(e.response()?.errorBody()?.string())
             }
         } catch (e: Exception) {
-            AuthResult.UnknownError(e.message)
+            Log.i("api","exception")
+            AuthResult.UnknownError("Не удалось подключиться к серверу")
         }
     }
 
@@ -61,10 +64,10 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
             if(e.code() == 401) {
                 AuthResult.Unauthorized()
             } else {
-                AuthResult.UnknownError(e.message)
+                AuthResult.UnknownError(e.response()?.errorBody()?.string())
             }
         } catch (e: Exception) {
-            AuthResult.UnknownError(e.message)
+            AuthResult.UnknownError("Не удалось подключиться к серверу")
         }
     }
 }
