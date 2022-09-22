@@ -17,6 +17,9 @@
         android:theme="@style/Theme.Androidfrontendtennis"
         tools:targetApi="31">
         <activity
+            android:name=".Penalty"
+            android:exported="false" />
+        <activity
             android:name=".Match"
             android:exported="false" />
         <activity
