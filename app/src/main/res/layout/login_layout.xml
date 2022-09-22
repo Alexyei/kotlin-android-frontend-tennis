@@ -39,7 +39,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/etSignupUsername"
+                android:id="@+id/etFirstPlayerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -59,10 +59,10 @@
                 android:hint="Логин"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSignupErrorText" />
+                app:layout_constraintTop_toBottomOf="@+id/tvNewMatchErrorText" />
 
             <EditText
-                android:id="@+id/etSignupPassword"
+                android:id="@+id/etSecondPlayerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -82,10 +82,10 @@
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etSignupUsername" />
+                app:layout_constraintTop_toBottomOf="@+id/etFirstPlayerName" />
 
             <TextView
-                android:id="@+id/tvSignupErrorText"
+                android:id="@+id/tvNewMatchErrorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -106,10 +106,10 @@
                 android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etSignupPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/etSecondPlayerName" />
 
             <include
-                android:id="@+id/btnCreate"
+                android:id="@+id/btnCreateMatch"
                 layout="@layout/progress_btn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"

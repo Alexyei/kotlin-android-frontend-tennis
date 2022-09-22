@@ -29,11 +29,11 @@ class LoginActivity : AppCompatActivity() {
 
         authService = ServiceManager.getAuthService(getPreferences(MODE_PRIVATE))
 
-        loginButton = findViewById(R.id.btnCreate)
+        loginButton = findViewById(R.id.btnCreateMatch)
         registrationLink = findViewById(R.id.tvEndLabel)
-        errorLabel = findViewById(R.id.tvSignupErrorText)
-        loginEditText = findViewById(R.id.etSignupUsername)
-        passwordEditText = findViewById(R.id.etSignupPassword)
+        errorLabel = findViewById(R.id.tvNewMatchErrorText)
+        loginEditText = findViewById(R.id.etFirstPlayerName)
+        passwordEditText = findViewById(R.id.etSecondPlayerName)
 
         registrationLink.setOnClickListener(View.OnClickListener { v->
             val intent = Intent(this, SignupActivity::class.java)

@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(){
 
         pbMain.visibility = View.VISIBLE;
 
-        val intent = Intent(this, ListOfMatches::class.java)
+        val intent = Intent(this, Match::class.java)
         startActivity(intent)
 
 

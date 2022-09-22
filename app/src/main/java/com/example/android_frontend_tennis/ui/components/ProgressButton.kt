@@ -35,10 +35,10 @@ class ProgressButton(ct: Context, view: View, text:String = "Loading", svgSrc: D
         svg = view.findViewById(R.id.imageView)
         svg.setImageDrawable(svgSrc)
         textView.setTextColor(Color.parseColor(textColor))
-        if (background !== null) {
-            cardView.background = background;
-        }else{
-            cardView.background = ContextCompat.getDrawable(ct, R.color.red);}
+//        if (background !== null) {
+//            cardView.background = background;
+//        }else{
+//            cardView.background = ContextCompat.getDrawable(ct, R.color.red);}
 //        mainLayout = view.findViewById(R.id.PB_main)
 
         textView.text = text

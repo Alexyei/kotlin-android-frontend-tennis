@@ -21,7 +21,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tvSetCount2"
+                android:id="@+id/tvSecondPlayerSets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -32,11 +32,11 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tvFirstPoint"
-                app:layout_constraintTop_toBottomOf="@+id/tvSetCount" />
+                app:layout_constraintEnd_toStartOf="@+id/tvFirstPlayerPoints"
+                app:layout_constraintTop_toBottomOf="@+id/tvFirstPlayerSets" />
 
             <TextView
-                android:id="@+id/tvFirstPoint2"
+                android:id="@+id/tvSecondPlayerPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -46,7 +46,7 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSetCount" />
+                app:layout_constraintTop_toBottomOf="@+id/tvFirstPlayerSets" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -94,7 +94,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/include3" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvFirstPlayerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -107,10 +107,10 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvSetCount" />
+                app:layout_constraintTop_toTopOf="@+id/tvFirstPlayerSets" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/tvSecondPlayerName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -124,10 +124,10 @@
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSetCount" />
+                app:layout_constraintTop_toBottomOf="@+id/tvFirstPlayerSets" />
 
             <TextView
-                android:id="@+id/tvFirstPoint"
+                android:id="@+id/tvFirstPlayerPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -140,7 +140,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/SplitLine_hor1" />
 
             <TextView
-                android:id="@+id/tvSetCount"
+                android:id="@+id/tvFirstPlayerSets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -149,7 +149,7 @@
                 android:textColor="@color/text"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/tvFirstPoint"
+                app:layout_constraintEnd_toStartOf="@+id/tvFirstPlayerPoints"
                 app:layout_constraintTop_toBottomOf="@+id/SplitLine_hor1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

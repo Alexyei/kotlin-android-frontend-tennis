@@ -34,9 +34,9 @@ class SignupActivity : AppCompatActivity() {
 
         signupButton = findViewById(R.id.signupBtn)
         loginLink = findViewById(R.id.tvEndLabel)
-        tvSignupErrorText = findViewById(R.id.tvSignupErrorText)
-        etSignupUsername = findViewById(R.id.etSignupUsername)
-        etSignupPassword = findViewById(R.id.etSignupPassword)
+        tvSignupErrorText = findViewById(R.id.tvNewMatchErrorText)
+        etSignupUsername = findViewById(R.id.etFirstPlayerName)
+        etSignupPassword = findViewById(R.id.etSecondPlayerName)
         etSignupPasswordRepeat = findViewById(R.id.etSignupPasswordRepeat)
         val progressButton = ProgressButton(this@SignupActivity,signupButton,"Создать аккаунт")
 

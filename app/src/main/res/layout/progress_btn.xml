@@ -57,8 +57,7 @@
                 android:layout_marginEnd="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/PB_textView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="null" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

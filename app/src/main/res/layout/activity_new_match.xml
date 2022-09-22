@@ -40,7 +40,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/etSignupUsername"
+                android:id="@+id/etFirstPlayerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -60,10 +60,10 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSignupErrorText" />
+                app:layout_constraintTop_toBottomOf="@+id/tvNewMatchErrorText" />
 
             <EditText
-                android:id="@+id/etSignupPassword"
+                android:id="@+id/etSecondPlayerName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -83,10 +83,10 @@
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etSignupUsername" />
+                app:layout_constraintTop_toBottomOf="@+id/etFirstPlayerName" />
 
             <TextView
-                android:id="@+id/tvSignupErrorText"
+                android:id="@+id/tvNewMatchErrorText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -100,17 +100,19 @@
             <RadioGroup
                 android:id="@+id/rgSetCount"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp"
+                android:checkedButton="@+id/firstCount"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etSignupPassword">
+                app:layout_constraintTop_toBottomOf="@+id/etSecondPlayerName">
 
                 <RadioButton
+                    android:id="@+id/firstCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -140,10 +142,11 @@
             <RadioGroup
                 android:id="@+id/rgSetEnd"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
+                android:checkedButton="@+id/endGame"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -151,13 +154,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/rgSetCount">
 
                 <RadioButton
+                    android:id="@+id/endGame"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:layout_weight="0.3"
                     android:background="@drawable/radio_selector"
                     android:button="@android:color/transparent"
-                    android:checked="true"
                     android:text="tie-break"
                     android:textAlignment="center"
                     android:textColor="@drawable/radio_text_selector"
@@ -192,15 +195,16 @@
 
 
             <include
-                android:id="@+id/btnCreate"
+                android:id="@+id/btnCreateMatch"
                 layout="@layout/progress_btn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rgSetEnd"
-                tools:layout_editor_absoluteX="110dp" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rgSetEnd" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
