@@ -33,7 +33,7 @@ class SignupActivity : AppCompatActivity() {
 
 
         signupButton = findViewById(R.id.signupBtn)
-        loginLink = findViewById(R.id.tvSignupLoginLink)
+        loginLink = findViewById(R.id.tvEndLabel)
         tvSignupErrorText = findViewById(R.id.tvSignupErrorText)
         etSignupUsername = findViewById(R.id.etSignupUsername)
         etSignupPassword = findViewById(R.id.etSignupPassword)

@@ -120,7 +120,7 @@
                 tools:text="Длина пароля меньше 5  символов" />
 
             <TextView
-                android:id="@+id/tvSignupLoginLink"
+                android:id="@+id/tvEndLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
@@ -142,7 +142,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSignupLoginLink" />
+                app:layout_constraintTop_toBottomOf="@+id/tvEndLabel" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

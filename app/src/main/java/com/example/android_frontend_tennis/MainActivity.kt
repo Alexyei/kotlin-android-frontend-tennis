@@ -37,6 +37,9 @@ class MainActivity : AppCompatActivity(){
 
         pbMain.visibility = View.VISIBLE;
 
+        val intent = Intent(this, ListOfMatches::class.java)
+        startActivity(intent)
+
 
 //        val handler = Handler()
 //            handler.postDelayed(Runnable {
@@ -46,27 +49,27 @@ class MainActivity : AppCompatActivity(){
 //
 //            },3000)
 
-        lifecycleScope.launchWhenCreated {
-            while (true){
-                var result = authService.authenticate()
-                when(result){
-                    is AuthResult.Authorized ->{
-
-                        pbMain.visibility = View.GONE
-                        break;
-                    }
-                    is AuthResult.Unauthorized -> {
-                        pbMain.visibility = View.GONE
-                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                        startActivity(intent)
-                        break;
-                    }
-                    is AuthResult.UnknownError ->{
-                        Toast.makeText(this@MainActivity,"Проверьте интернет-соединение",Toast.LENGTH_LONG).show()
-                    }
-                }
-            }
-        }
+//        lifecycleScope.launchWhenCreated {
+//            while (true){
+//                var result = authService.authenticate()
+//                when(result){
+//                    is AuthResult.Authorized ->{
+//
+//                        pbMain.visibility = View.GONE
+//                        break;
+//                    }
+//                    is AuthResult.Unauthorized -> {
+//                        pbMain.visibility = View.GONE
+//                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+//                        startActivity(intent)
+//                        break;
+//                    }
+//                    is AuthResult.UnknownError ->{
+//                        Toast.makeText(this@MainActivity,"Проверьте интернет-соединение",Toast.LENGTH_LONG).show()
+//                    }
+//                }
+//            }
+//        }
     }
 
 

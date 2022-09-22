@@ -3,7 +3,6 @@ package com.example.android_frontend_tennis
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -30,8 +29,8 @@ class LoginActivity : AppCompatActivity() {
 
         authService = ServiceManager.getAuthService(getPreferences(MODE_PRIVATE))
 
-        loginButton = findViewById(R.id.loginBtn)
-        registrationLink = findViewById(R.id.tvSignupLoginLink)
+        loginButton = findViewById(R.id.btnCreate)
+        registrationLink = findViewById(R.id.tvEndLabel)
         errorLabel = findViewById(R.id.tvSignupErrorText)
         loginEditText = findViewById(R.id.etSignupUsername)
         passwordEditText = findViewById(R.id.etSignupPassword)
