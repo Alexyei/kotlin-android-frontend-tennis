@@ -72,6 +72,16 @@ class Match : AppCompatActivity() {
 
         tvServingTimer.text ="00.00"
 
+        val cardPosition = intent.getIntExtra("position",-1)
+//        val matchCardAdapter = GlobalVariablesInstance.getMatchCardAdapterInstance()
+        val matchCardAdapter = GlobalVariables().matchCardAdapter as MatchCardAdapter
+//
+//        val currentCard = matchCardAdapter.getItem(cardPosition)
+//
+        tvFirstPlayerName.text = cardPosition.toString()
+       tvSecondPlayerName.text = matchCardAdapter.itemCount.toString()
+
+
         btnRemovePointToFirstPlayer.setOnClickListener(View.OnClickListener { v->
             Toast.makeText(this@Match,"- 1",Toast.LENGTH_LONG).show()
         })
