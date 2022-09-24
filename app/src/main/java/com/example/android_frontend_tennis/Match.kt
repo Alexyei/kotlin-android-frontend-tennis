@@ -74,12 +74,18 @@ class Match : AppCompatActivity() {
 
         val cardPosition = intent.getIntExtra("position",-1)
 //        val matchCardAdapter = GlobalVariablesInstance.getMatchCardAdapterInstance()
-        val matchCardAdapter = GlobalVariables().matchCardAdapter as MatchCardAdapter
+//        val matchCardAdapter = GlobalVariables().matchCardAdapter as MatchCardAdapter
 //
-//        val currentCard = matchCardAdapter.getItem(cardPosition)
+        if (cardPosition == -1){
+            val intent = Intent(this, ListOfMatches::class.java)
+            startActivity(intent)
+        }
+
+
+        val currentCard = DataObject.getData(cardPosition)
 //
-        tvFirstPlayerName.text = cardPosition.toString()
-       tvSecondPlayerName.text = matchCardAdapter.itemCount.toString()
+        tvFirstPlayerName.text = currentCard.firstPlayerName
+       tvSecondPlayerName.text = currentCard.secondPlayerName
 
 
         btnRemovePointToFirstPlayer.setOnClickListener(View.OnClickListener { v->

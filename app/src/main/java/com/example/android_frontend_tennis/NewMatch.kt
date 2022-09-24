@@ -1,5 +1,6 @@
 package com.example.android_frontend_tennis
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ class NewMatch : AppCompatActivity() {
     private lateinit var etSecondPlayerName:EditText;
     private lateinit var rgSetCount:RadioGroup;
     private lateinit var rgSetEnd:RadioGroup;
+    private lateinit var rgSetWhoService:RadioGroup;
     private lateinit var btnCreateMatch: View;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +25,7 @@ class NewMatch : AppCompatActivity() {
 
         rgSetCount = findViewById(R.id.rgSetCount)
         rgSetEnd = findViewById(R.id.rgSetEnd)
+        rgSetWhoService = findViewById(R.id.rgSetWhoService)
         btnCreateMatch = findViewById(R.id.btnCreateMatch)
 
         val addCreateMatchButton = ProgressButton(this@NewMatch,btnCreateMatch,"Создать")
@@ -32,11 +35,16 @@ class NewMatch : AppCompatActivity() {
         btnCreateMatch.setOnClickListener(View.OnClickListener { v->
             if (!validateForm())return@OnClickListener;
             val setCount = getSetCount()
-            val end = getEnd()
+            val endType = getEndType()
+            val whoServiceFirst  = getWhoService()
             val firstPlayerName = etFirstPlayerName.text.toString()
             val secondPlayerName = etSecondPlayerName.text.toString()
 
-            Toast.makeText(this@NewMatch,"$setCount:$end:$firstPlayerName:$secondPlayerName",Toast.LENGTH_LONG).show()
+            DataObject.addData(firstPlayerName,secondPlayerName,setCount,endType,whoServiceFirst)
+
+            val intent = Intent(this, ListOfMatches::class.java)
+            startActivity(intent)
+//            Toast.makeText(this@NewMatch,"$setCount:$end:$firstPlayerName:$secondPlayerName",Toast.LENGTH_LONG).show()
         })
 
     }
@@ -44,12 +52,21 @@ class NewMatch : AppCompatActivity() {
     fun getSetCount():Int{
         val radio = findViewById<RadioButton>(rgSetCount.checkedRadioButtonId).text
         return when(radio){
-            "3 сета"->return 3
-            else->return 5
+            "3 сета"-> 3
+            else-> 5
         }
     }
 
-    fun getEnd():String{
+    fun getWhoService():Int{
+        val radio = findViewById<RadioButton>(rgSetWhoService.checkedRadioButtonId).text
+        return when(radio){
+            "Первый"-> 0
+            "Второй"-> 1
+            else-> if (Math.random() > 0.5) 0 else 1
+        }
+    }
+
+    fun getEndType():String{
         val radio = findViewById<RadioButton>(rgSetEnd.checkedRadioButtonId).text
         return radio.toString()
     }

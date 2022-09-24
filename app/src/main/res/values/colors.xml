@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red">#FE5F1E</color>
     <color name="second_red">#E31B57</color>
-    <color name="background">#F3F3F3</color>
+    <color name="background">#FFF3F3F3</color>
     <color name="text">#302D2B</color>
     <color name="blue">#6874F6</color>
 </resources>

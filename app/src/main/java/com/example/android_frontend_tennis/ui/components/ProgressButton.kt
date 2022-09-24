@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.android_frontend_tennis.R
 
-class ProgressButton(ct: Context, view: View, text:String = "Loading", svgSrc: Drawable? = null, textColor:String = "white", background:Drawable? = null) {
+class ProgressButton(ct: Context, view: View, text:String = "Loading", svgSrc: Drawable? = null, textColor:String = "white", background:Int? = null) {
     private lateinit var cardView: CardView
     private lateinit var constraintLayout: ConstraintLayout
 //    private lateinit var mainLayout: ConstraintLayout
@@ -35,10 +35,9 @@ class ProgressButton(ct: Context, view: View, text:String = "Loading", svgSrc: D
         svg = view.findViewById(R.id.imageView)
         svg.setImageDrawable(svgSrc)
         textView.setTextColor(Color.parseColor(textColor))
-//        if (background !== null) {
-//            cardView.background = background;
-//        }else{
-//            cardView.background = ContextCompat.getDrawable(ct, R.color.red);}
+        if (background != null) {
+            cardView.setCardBackgroundColor(background)
+        }
 //        mainLayout = view.findViewById(R.id.PB_main)
 
         textView.text = text

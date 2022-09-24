@@ -4,13 +4,17 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 data class MatchCard (
-    val id: String?,
+    var id: String?,
     val created: Date,
-    val saved:Boolean,
+    val setCount: Int,
+    val endType: String,
+    val whoServiceFirst:Int,
+
+    var saved:Boolean,
     val firstPlayerName:String,
     val secondPlayerName:String,
-    val firstPlayerSets:ArrayList<Int>,
-    val secondPlayerSets:ArrayList<Int>,
-    val firstPlayerPoints:String,
-    val secondPlayerPoints: String
+    var firstPlayerSets:ArrayList<Int>,
+    var secondPlayerSets:ArrayList<Int>,
+    var firstPlayerPoints:String,
+    var secondPlayerPoints: String
 )
