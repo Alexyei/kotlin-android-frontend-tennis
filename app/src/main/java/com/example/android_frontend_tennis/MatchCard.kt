@@ -13,8 +13,10 @@ data class MatchCard (
     var saved:Boolean,
     val firstPlayerName:String,
     val secondPlayerName:String,
-    var firstPlayerSets:ArrayList<Int>,
-    var secondPlayerSets:ArrayList<Int>,
-    var firstPlayerPoints:String,
-    var secondPlayerPoints: String
+//    var firstPlayerSets:ArrayList<Int>,
+//    var secondPlayerSets:ArrayList<Int>,
+//    var firstPlayerPoints:String,
+//    var secondPlayerPoints: String
+    var sets: Pair<ArrayList<Int>,ArrayList<Int>>,
+    var points: Pair<String,String>,
 )

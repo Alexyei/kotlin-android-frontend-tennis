@@ -137,7 +137,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
-                android:id="@+id/ivFistPlayerServing"
+                android:id="@+id/ivFirstPlayerServing"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginStart="5dp"
@@ -224,7 +224,7 @@
                 android:textColor="@color/text"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/tvFirstPlayerPoints"
+                app:layout_constraintEnd_toStartOf="@+id/tvSecondPlayerPoints"
                 app:layout_constraintTop_toBottomOf="@+id/btnRemovePointToFirstPlayer" />
 
             <TextView

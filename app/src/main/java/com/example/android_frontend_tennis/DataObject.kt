@@ -14,11 +14,16 @@ object DataObject {
         firstPlayerSets.add(0)
         val secondPlayerSets = ArrayList<Int>()
         secondPlayerSets.add(0)
-        val firstPlayerPoints = "0"
-        val secondPlayerPoints = "0"
+
+        val sets = Pair(firstPlayerSets, secondPlayerSets)
+//        val firstPlayerPoints = "0"
+//        val secondPlayerPoints = "0"
+
+        val points = Pair("0","0")
+
         val saved = false
 
-        listdata.add(MatchCard(id,createdAt,setCount , endType, whoServiceFirst, saved, firstPlayerName, secondPlayerName, firstPlayerSets, secondPlayerSets, firstPlayerPoints, secondPlayerPoints))
+        listdata.add(MatchCard(id,createdAt,setCount , endType, whoServiceFirst, saved, firstPlayerName, secondPlayerName, sets,points))
     }
 
     fun getAllData(): List<MatchCard> {
@@ -37,12 +42,20 @@ object DataObject {
         listdata.removeAt(pos)
     }
 
-    fun updateData(pos:Int,firstPlayerSets:ArrayList<Int>, secondPlayerSets:ArrayList<Int>, firstPlayerPoints: String, secondPlayerPoints:String)
-    {
-        listdata[pos].firstPlayerSets = firstPlayerSets
-        listdata[pos].secondPlayerSets = secondPlayerSets
-        listdata[pos].firstPlayerPoints = firstPlayerPoints
-        listdata[pos].secondPlayerPoints = secondPlayerPoints
+//    fun updateData(pos:Int,firstPlayerSets:ArrayList<Int>, secondPlayerSets:ArrayList<Int>, firstPlayerPoints: String, secondPlayerPoints:String)
+//    {
+//        listdata[pos].firstPlayerSets = firstPlayerSets
+//        listdata[pos].secondPlayerSets = secondPlayerSets
+//        listdata[pos].firstPlayerPoints = firstPlayerPoints
+//        listdata[pos].secondPlayerPoints = secondPlayerPoints
+//    }
+
+    fun updateDataSets(pos: Int, sets: Pair<ArrayList<Int>,ArrayList<Int>>){
+        listdata[pos].sets = sets
+    }
+
+    fun updateDataPoints(pos:Int, points: Pair<String,String>){
+        listdata[pos].points = points
     }
 
     fun updateData(pos:Int,saved:Boolean)

@@ -80,8 +80,10 @@ class MatchCardAdapter(
             this.findViewById<TextView>(R.id.tvMatchCardStartedAt).text = sdf.format(curMatch.created)
             this.findViewById<TextView>(R.id.tvFirstPlayerName).text = curMatch.firstPlayerName.toString()
             this.findViewById<TextView>(R.id.tvSecondPlayerName).text = curMatch.secondPlayerName.toString()
-            this.findViewById<TextView>(R.id.tvFirstPlayerPoints).text = curMatch.firstPlayerPoints.toString()
-            this.findViewById<TextView>(R.id.tvSecondPlayerPoints).text = curMatch.secondPlayerPoints.toString()
+            this.findViewById<TextView>(R.id.tvFirstPlayerPoints).text = curMatch.points.first.toString()
+            this.findViewById<TextView>(R.id.tvSecondPlayerPoints).text = curMatch.points.second.toString()
+            this.findViewById<TextView>(R.id.tvFirstPlayerSets).text =  curMatch.sets.first.joinToString(" ")
+            this.findViewById<TextView>(R.id.tvSecondPlayerSets).text =  curMatch.sets.second.joinToString(" ")
 
 
 
