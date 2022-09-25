@@ -154,7 +154,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvFirstPlayerPoints" />
+                app:layout_constraintTop_toBottomOf="@+id/tvFirstPlayerSets" />
 
             <include
                 android:id="@+id/btnAddPointToSecondPlayer"
@@ -172,8 +172,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="44dp"
-                app:layout_constraintEnd_toStartOf="@+id/btnAddPointToFirstPlayer"
+                android:layout_marginEnd="84dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvFirstPlayerSets" />
 
             <include
@@ -182,8 +182,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="44dp"
-                app:layout_constraintEnd_toStartOf="@+id/btnAddPointToSecondPlayer"
+                android:layout_marginEnd="84dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSecondPlayerSets" />
 
             <TextView
@@ -231,14 +231,13 @@
                 android:id="@+id/tvSecondPlayerPoints"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:text="AD"
                 android:textColor="@color/red"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnAddPointToFirstPlayer" />
+                app:layout_constraintTop_toTopOf="@+id/tvSecondPlayerSets" />
 
             <include
                 android:id="@+id/btnStartServing"

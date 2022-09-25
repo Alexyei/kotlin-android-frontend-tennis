@@ -70,7 +70,7 @@ class Match : AppCompatActivity() {
         ProgressButton(this@Match, btnStartServing, "Подача")
         ProgressButton(this@Match, btnCreateMatch, "Оштрафовать")
 
-        tvMessage.visibility = View.GONE
+
         ivFirstPlayerServing.visibility = View.GONE
         ivSecondPlayerServing.visibility = View.GONE
 
@@ -212,7 +212,7 @@ class Match : AppCompatActivity() {
                 renderServiceLabel(whoNotServiceInLastGame())
             }
             else{
-                if (pointCount % 3 == 0 || pointCount % 4 == 0){
+                if ((pointCount+1) % 4 == 0 || pointCount % 4 == 0){
                     renderServiceLabel(whoNotServiceInLastGame())
                 }
                 else{
@@ -257,11 +257,11 @@ class Match : AppCompatActivity() {
 
         var result = Pair(0,0)
 
-        for (i in 0..sets.first.count()){
+        for (i in 0..sets.first.count()-1){
             if (sets.first[i] > sets.second[i])
                 result = Pair(result.first+1, result.second)
             else
-                result = Pair(result.first, result.second)
+                result = Pair(result.first, result.second+1)
         }
 
         return result;
@@ -298,6 +298,8 @@ class Match : AppCompatActivity() {
         val result = getMatchResult()
 
         //CHECK DISQUALIFICATION
+
+
 
         if (result.first > result.second){
             tvMessage.text = "Победил ${tvFirstPlayerName.text}"
@@ -341,7 +343,7 @@ class Match : AppCompatActivity() {
     fun addSet(){
         val setCount = currentCard.setCount
         var sets = currentCard.sets
-        if (sets.first.count() < setCount)
+        if (!isMatchOver())
         {
             sets.first.add(0)
             sets.second.add(0)
