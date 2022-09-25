@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Paint
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,6 +77,8 @@ class MatchCardAdapter(
 
             val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
+
+            Log.e("BIND","BIND CARD")
 
             this.findViewById<TextView>(R.id.tvMatchCardStartedAt).text = sdf.format(curMatch.created)
             this.findViewById<TextView>(R.id.tvFirstPlayerName).text = curMatch.firstPlayerName.toString()

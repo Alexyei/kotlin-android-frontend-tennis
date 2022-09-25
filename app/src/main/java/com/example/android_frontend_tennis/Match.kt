@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.android_frontend_tennis.ui.components.ProgressButton
 import org.json.JSONArray
+import kotlin.math.max
+import kotlin.math.min
 
 class Match : AppCompatActivity() {
 
@@ -267,10 +269,25 @@ class Match : AppCompatActivity() {
         return result;
     }
 
+    fun longGameIsOver():Boolean{
+
+        if (currentCard.endType == "+2 games"){
+            val sets = currentCard.sets
+            val different = max(sets.first.last(), sets.second.last()) - min(sets.first.last(), sets.second.last())
+
+            if ((sets.first.count() == currentCard.setCount) && max(sets.first.last(), sets.second.last()) >= 7 && different<2) return false
+        }
+
+        return true;
+    }
+
     fun currentSetIsOver():Boolean{
         val sets = currentCard.sets
 
-        if (sets.first.last() == 7 || sets.second.last() == 7) return true
+
+
+
+        if ((sets.first.last() >= 7 || sets.second.last() >= 7) && longGameIsOver()) return true
         if (sets.first.last() == 6 && sets.second.last() < 5) return true
         if (sets.second.last() == 6 && sets.first.last() < 5) return true
 
@@ -363,7 +380,7 @@ class Match : AppCompatActivity() {
 
 
 
-        if (currentGamesValue == 7){
+        if (currentGamesValue == 7 && longGameIsOver()){
             addSet()
         }
         else if (currentGamesValue == 6 && opponentGamesValue < 5){
@@ -463,5 +480,11 @@ class Match : AppCompatActivity() {
         }
 
 
+    }
+
+    override fun onBackPressed() {
+        // Do Here what ever you want do on back press;
+        val intent = Intent(this, ListOfMatches::class.java)
+        startActivity(intent)
     }
 }
