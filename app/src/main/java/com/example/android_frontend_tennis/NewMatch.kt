@@ -27,7 +27,7 @@ class NewMatch : AppCompatActivity() {
         rgSetCount = findViewById(R.id.rgSetCount)
         rgSetEnd = findViewById(R.id.rgSetEnd)
         rgSetWhoService = findViewById(R.id.rgSetWhoService)
-        btnCreateMatch = findViewById(R.id.btnCreateMatch)
+        btnCreateMatch = findViewById(R.id.btnCreatePenalty)
 
         val addCreateMatchButton = ProgressButton(this@NewMatch,btnCreateMatch,"Создать")
 

@@ -21,9 +21,10 @@ object DataObject {
 
         val points = Pair("0","0")
 
+        val penalties = ArrayList<PenaltyClass>()
         val saved = false
 
-        listdata.add(MatchCard(id,createdAt,setCount , endType, whoServiceFirst, saved, firstPlayerName, secondPlayerName, sets,points))
+        listdata.add(MatchCard(id,createdAt,setCount , endType, whoServiceFirst, saved, firstPlayerName, secondPlayerName, penalties, sets,points))
     }
 
     fun getAllData(): List<MatchCard> {
@@ -61,6 +62,10 @@ object DataObject {
     fun updateData(pos:Int,saved:Boolean)
     {
         listdata[pos].saved = saved
+    }
+
+    fun addPenalty(pos:Int, penalty:PenaltyClass){
+        listdata[pos].penalties.add(penalty)
     }
 
 }

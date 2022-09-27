@@ -17,6 +17,7 @@ data class MatchCard (
 //    var secondPlayerSets:ArrayList<Int>,
 //    var firstPlayerPoints:String,
 //    var secondPlayerPoints: String
+    var penalties: ArrayList<PenaltyClass>,
     var sets: Pair<ArrayList<Int>,ArrayList<Int>>,
     var points: Pair<String,String>,
 )

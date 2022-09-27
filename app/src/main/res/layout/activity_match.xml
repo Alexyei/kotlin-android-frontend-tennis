@@ -41,14 +41,17 @@
 
             <TextView
                 android:id="@+id/tvMessage"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Смена сторон!"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="Смена сторон! Смена мячей!"
+                android:textAlignment="center"
                 android:textColor="@color/red"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:fontFamily="sans-serif"
-                app:layout_constraintBottom_toTopOf="@+id/btnCreateMatch"
+                app:layout_constraintBottom_toTopOf="@+id/btnCreatePenalty"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,13 +75,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/background"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnRemovePointToSecondPlayer" />
+                app:layout_constraintTop_toBottomOf="@+id/tvSecondPlayerName" />
 
             <TextView
                 android:id="@+id/tvFirstPlayerName"
@@ -123,7 +126,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/SplitLine_hor1" />
 
             <include
-                android:id="@+id/btnCreateMatch"
+                android:id="@+id/btnCreatePenalty"
                 layout="@layout/progress_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -191,7 +194,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:ellipsize="end"
                 android:maxWidth="200dp"
                 android:maxLines="1"
@@ -201,7 +203,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnRemovePointToFirstPlayer" />
+                app:layout_constraintTop_toTopOf="@+id/tvSecondPlayerSets" />
 
             <ImageView
                 android:id="@+id/ivSecondPlayerServing"
@@ -218,14 +220,14 @@
                 android:id="@+id/tvSecondPlayerSets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginEnd="16dp"
                 android:text="7 5 3 2 1"
                 android:textColor="@color/text"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/tvSecondPlayerPoints"
-                app:layout_constraintTop_toBottomOf="@+id/btnRemovePointToFirstPlayer" />
+                app:layout_constraintTop_toBottomOf="@+id/tvFirstPlayerSets" />
 
             <TextView
                 android:id="@+id/tvSecondPlayerPoints"

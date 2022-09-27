@@ -9,7 +9,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         app:cardBackgroundColor="@color/white"
@@ -64,6 +64,69 @@
                 app:layout_constraintBottom_toBottomOf="@+id/rgSetPenalty"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/rgSetPenalty" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Штрафуемый игрок"
+                android:textColor="@color/text"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:fontFamily="sans-serif"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rgSetPenalty" />
+
+            <RadioGroup
+                android:id="@+id/rgSetPlayer"
+                android:checkedButton="@+id/rbFirstPlayer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                app:layout_constraintBottom_toTopOf="@+id/btnAddPenalty"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
+
+                <RadioButton
+                    android:id="@+id/rbFirstPlayer"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/radio_selector"
+                    android:button="@android:color/transparent"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Первый игрок dssdsdsdd sssdsdsdssdsdsdsdsdsdsd"
+                    android:textAlignment="center"
+                    android:textColor="@drawable/radio_text_selector"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <RadioButton
+                    android:id="@+id/rbSecondPlayer"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/radio_selector"
+                    android:button="@android:color/transparent"
+                    android:text="Второй игрок"
+                    android:textAlignment="center"
+                    android:textColor="@drawable/radio_text_selector"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </RadioGroup>
 
             <RadioGroup
                 android:id="@+id/rgSetCause"
@@ -127,14 +190,14 @@
 
             <RadioGroup
                 android:id="@+id/rgSetPenalty"
-                android:checkedButton="@+id/f_penalty"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="0.5"
+                android:checkedButton="@+id/f_penalty"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toTopOf="@+id/btnAddPenalty"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etmCause">
 

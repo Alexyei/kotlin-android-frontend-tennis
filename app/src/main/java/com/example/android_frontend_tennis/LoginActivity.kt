@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
         authService = ServiceManager.getAuthService(getPreferences(MODE_PRIVATE))
 
-        loginButton = findViewById(R.id.btnCreateMatch)
+        loginButton = findViewById(R.id.btnCreatePenalty)
         registrationLink = findViewById(R.id.tvEndLabel)
         errorLabel = findViewById(R.id.tvNewMatchErrorText)
         loginEditText = findViewById(R.id.etFirstPlayerName)
