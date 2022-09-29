@@ -1,8 +1,6 @@
 package com.example.android_frontend_tennis
 
-import android.content.Context
 import android.content.Intent
-import android.graphics.Paint
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -13,19 +11,27 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android_frontend_tennis.ui.components.ProgressButton
+import com.example.android_frontend_tennis.api.ServiceManager
+import com.example.android_frontend_tennis.api.match.MatchService
 import com.example.android_frontend_tennis.ui.components.ProgressButtonSVG
+import kotlinx.datetime.toJavaInstant
 import java.text.SimpleDateFormat
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class MatchCardAdapter(
-    private val matches: List<MatchCard>
+    private val matches: List<MatchCard>,
+    private val onSaveCallback:IOnSaveCB
 ) : RecyclerView.Adapter<MatchCardAdapter.MatchCardViewHolder>() {
 
     class MatchCardViewHolder(cardView: View) : RecyclerView.ViewHolder(cardView)
 //    private lateinit var context: Context;
     private lateinit var deleteBtn:ProgressButtonSVG;
     private lateinit var saveBtn:ProgressButtonSVG;
+    private lateinit var matchService: MatchService;
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchCardViewHolder {
         val holder = MatchCardViewHolder(
             LayoutInflater.from(parent.context).inflate(
@@ -75,12 +81,17 @@ class MatchCardAdapter(
             deleteBtn = ProgressButtonSVG(context, delete_btn )
             saveBtn = ProgressButtonSVG(context, save_btn )
 
-            val sdf = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
+            matchService = ServiceManager.getMatchService()
 
 
+//            val sdf = SimpleDateFormat("dd.MM.uuuu HH:mm", Locale.getDefault())
+            val formatter: DateTimeFormatter = DateTimeFormatter
+                .ofPattern("dd.MM.yyyy HH:mm").withZone(ZoneId.systemDefault());
+
+            formatter.format(curMatch.created.toJavaInstant())
             Log.e("BIND","BIND CARD")
 
-            this.findViewById<TextView>(R.id.tvMatchCardStartedAt).text = sdf.format(curMatch.created)
+            this.findViewById<TextView>(R.id.tvMatchCardStartedAt).text = formatter.format(curMatch.created.toJavaInstant())
             this.findViewById<TextView>(R.id.tvFirstPlayerName).text = curMatch.firstPlayerName.toString()
             this.findViewById<TextView>(R.id.tvSecondPlayerName).text = curMatch.secondPlayerName.toString()
             this.findViewById<TextView>(R.id.tvFirstPlayerPoints).text = curMatch.points.first.toString()
@@ -146,29 +157,61 @@ class MatchCardAdapter(
 //                startActivity(context,intent,null)
             })
 
+//            (context as Activity).runOnUiThread(Runnable() {
             this.findViewById<View>(R.id.btnMatchCardSave).setOnClickListener(View.OnClickListener { v->
+
+
                 blockCard()
                 saveBtn.buttonActivated()
-                Toast.makeText(context,"SAVE CLICK",Toast.LENGTH_LONG).show()
-                Handler(Looper.getMainLooper()).postDelayed({
-
-                    DataObject.updateData(position, true)
+//                Toast.makeText(context,"SAVE CLICK",Toast.LENGTH_LONG).show()
+//                Handler(Looper.getMainLooper()).postDelayed({
+//
+//                    DataObject.updateData(position, true)
+//                    notifyItemChanged(position)
+//                    saveBtn.buttonFinished()
+//                    unBlockCard()
+//                },2000)
+//                GlobalScope.launch {
+//                    var result = matchService.insertOrUpdate(curMatch)
+//
+//                    when (result){
+//                        is MatchResult.InsertedSuccess ->{
+//
+//                            Toast.makeText(context,result.data.toString(),Toast.LENGTH_LONG).show()
+//
+//                            }
+//                        is MatchResult.Unauthorized ->{
+//
+//                                Toast.makeText(context, "Вы не авторизованы", Toast.LENGTH_LONG)
+//                                    .show()
+//                            }
+//                        else->{
+//
+//                                Toast.makeText(context, "Непредвиденная ошибка", Toast.LENGTH_LONG)
+//                                    .show()
+//
+//                            }
+//                    }
+//
+////                    DataObject.updateData(position, true)
+//                    notifyItemChanged(position)
+//                    saveBtn.buttonFinished()
+//                    unBlockCard()
+//
+//
+//            }
+                onSaveCallback.onSaveCallback(matchService,curMatch) {
                     notifyItemChanged(position)
                     saveBtn.buttonFinished()
                     unBlockCard()
-                },2000)
+                }
             })
 
-//            tvTodoTitle.text = curTodo.title
-//            cbDone.isChecked = curTodo.isChecked
-//            toggleStrikeThrough(tvTodoTitle, curTodo.isChecked)
-//            cbDone.setOnCheckedChangeListener { _, isChecked ->
-//                toggleStrikeThrough(tvTodoTitle, isChecked)
-//                curTodo.isChecked = !curTodo.isChecked
-//            }
             displaySaveBtn(curMatch.saved)
         }
+
     }
+
 
     override fun getItemCount(): Int {
         return matches.size

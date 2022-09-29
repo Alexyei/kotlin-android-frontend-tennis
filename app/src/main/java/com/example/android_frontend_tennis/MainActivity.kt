@@ -3,6 +3,7 @@ package com.example.android_frontend_tennis
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
@@ -11,8 +12,12 @@ import androidx.lifecycle.lifecycleScope
 import com.example.android_frontend_tennis.api.ServiceManager
 import com.example.android_frontend_tennis.api.auth.AuthResult
 import com.example.android_frontend_tennis.api.auth.AuthService
+import com.example.android_frontend_tennis.api.match.MatchResponse
+import com.example.android_frontend_tennis.api.match.MatchResult
+import com.example.android_frontend_tennis.api.match.MatchService
 import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.delay
+import kotlinx.datetime.Instant
 
 
 class MainActivity : AppCompatActivity(){
@@ -23,6 +28,7 @@ class MainActivity : AppCompatActivity(){
     private lateinit var pbMain:ProgressBar
 
     private lateinit var authService:AuthService;
+    private lateinit var matchService:MatchService;
 
 
 //    private val service = PostsService.create()
@@ -33,12 +39,40 @@ class MainActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         authService = ServiceManager.getAuthService(getPreferences(MODE_PRIVATE))
+        matchService = ServiceManager.getMatchService()
         pbMain = findViewById(R.id.pbMain)
 
         pbMain.visibility = View.VISIBLE;
 
-        val intent = Intent(this, ListOfMatches::class.java)
-        startActivity(intent)
+        lifecycleScope.launchWhenCreated {
+            var result = matchService.getAll()
+            when(result){
+                is MatchResult.WithError ->{
+                    Toast.makeText(this@MainActivity,"Ошибка подключения",Toast.LENGTH_LONG).show()
+
+                }
+                is MatchResult.Unauthorized ->{
+                    Toast.makeText(this@MainActivity,"Вы не авторизованы",Toast.LENGTH_LONG).show()
+
+                }
+                is MatchResult.Success->{
+//                    result.data?.javaClass?.let { Log.e("res", it.name) }
+                    Log.e("res",(result.data as ArrayList<MatchResponse>).count().toString())
+                    Toast.makeText(this@MainActivity,result.data.toString(),Toast.LENGTH_LONG).show()
+//                    Log.e("time",Instant.parse((result.data as ArrayList<MatchResponse>).first().created).toString())
+
+                    val cards = (result.data as ArrayList<MatchResponse>).map { el->
+                        MatchCard(el.id, Instant.parse(el.created),el.setCount,el.endType,el.whoServiceFirst, true,el.firstPlayerName,el.secondPlayerName,el.penalties,el.sets,el.points)
+                    }
+                }
+            }
+
+            val intent = Intent(this@MainActivity, ListOfMatches::class.java)
+            startActivity(intent)
+        }
+
+
+
 
 
 //        val handler = Handler()

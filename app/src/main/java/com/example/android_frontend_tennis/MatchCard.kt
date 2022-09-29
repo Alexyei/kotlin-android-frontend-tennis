@@ -1,11 +1,15 @@
 package com.example.android_frontend_tennis
 
-import java.util.*
+
+
+import kotlinx.datetime.Instant
+import java.time.LocalDateTime
 import kotlin.collections.ArrayList
+
 
 data class MatchCard (
     var id: String?,
-    val created: Date,
+    val created: Instant,
     val setCount: Int,
     val endType: String,
     val whoServiceFirst:Int,

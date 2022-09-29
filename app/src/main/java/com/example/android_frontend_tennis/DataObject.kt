@@ -1,6 +1,8 @@
 package com.example.android_frontend_tennis
 
-import java.util.*
+
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import kotlin.collections.ArrayList
 
 
@@ -9,7 +11,7 @@ object DataObject {
 
     fun addData(firstPlayerName: String, secondPlayerName: String, setCount:Int, endType:String, whoServiceFirst:Int) {
         val id = null;
-        val createdAt = Calendar.getInstance().time
+        val createdAt = Clock.System.now()
         val firstPlayerSets = ArrayList<Int>()
         firstPlayerSets.add(0)
         val secondPlayerSets = ArrayList<Int>()

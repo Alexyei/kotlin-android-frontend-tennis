@@ -97,6 +97,11 @@ class NewMatch : AppCompatActivity() {
             errorLabel.text ="Имя второго игрока от 3 до 30 символов"
             return false;
         }
+
+        if (firstPlayerName == secondPlayerName){
+            errorLabel.text ="Имена игроков должны отличаться"
+            return false;
+        }
         return true;
     }
 }
