@@ -1,10 +1,7 @@
 package com.example.android_frontend_tennis.api.match
 
 import com.example.android_frontend_tennis.MatchCard
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface MatchApi {
     @POST("insert-or-update")
@@ -14,6 +11,17 @@ interface MatchApi {
 
     @GET("all-matches")
     suspend fun getAll():ArrayList<MatchResponse>
+
+    @GET("my-matches")
+    suspend fun getMyMatches(
+        @Header("Authorization") token: String
+    ):ArrayList<MatchResponse>
+
+    @DELETE("delete-match/{id}")
+    suspend fun deleteMatch(
+        @Header("Authorization") token: String,
+        @Path("id") id: String
+    ):Boolean
 
 //    @POST("signin")
 //    suspend fun signIn(

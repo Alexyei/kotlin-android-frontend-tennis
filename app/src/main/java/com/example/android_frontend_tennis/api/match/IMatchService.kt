@@ -6,4 +6,6 @@ import com.example.android_frontend_tennis.MatchCard
 interface IMatchService {
     suspend fun insertOrUpdate(match:MatchCard): MatchResult<Any>
     suspend fun getAll(): MatchResult<Any>
+    suspend fun getMyMatches(): MatchResult<Any>
+    suspend fun deleteMatch(matchId:String):MatchResult<Any>
 }

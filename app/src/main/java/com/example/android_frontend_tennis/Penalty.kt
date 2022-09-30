@@ -64,7 +64,11 @@ class Penalty : AppCompatActivity() {
             val toFirstPlayer =
                 findViewById<RadioButton>(rgSetPlayer.checkedRadioButtonId).text == currentCard.firstPlayerName;
 
-            Toast.makeText(this@Penalty,"$cause:$penalty:$toFirstPlayer",Toast.LENGTH_LONG).show()
+            if (cause.length > 100) {
+                Toast.makeText(this@Penalty,"Причина - не более 100 символов",Toast.LENGTH_LONG).show()
+                return@OnClickListener
+            }
+//            Toast.makeText(this@Penalty,"$cause:$penalty:$toFirstPlayer",Toast.LENGTH_LONG).show()
 
 
             DataObject.addPenalty(cardPosition, PenaltyClass(cause,penalty,toFirstPlayer))

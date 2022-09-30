@@ -38,38 +38,13 @@ class MainActivity : AppCompatActivity(){
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        authService = ServiceManager.getAuthService(getPreferences(MODE_PRIVATE))
-        matchService = ServiceManager.getMatchService()
+        authService = ServiceManager.getAuthService(getSharedPreferences("token",MODE_PRIVATE))
+        matchService = ServiceManager.getMatchService(getSharedPreferences("token",MODE_PRIVATE))
         pbMain = findViewById(R.id.pbMain)
 
         pbMain.visibility = View.VISIBLE;
 
-        lifecycleScope.launchWhenCreated {
-            var result = matchService.getAll()
-            when(result){
-                is MatchResult.WithError ->{
-                    Toast.makeText(this@MainActivity,"Ошибка подключения",Toast.LENGTH_LONG).show()
 
-                }
-                is MatchResult.Unauthorized ->{
-                    Toast.makeText(this@MainActivity,"Вы не авторизованы",Toast.LENGTH_LONG).show()
-
-                }
-                is MatchResult.Success->{
-//                    result.data?.javaClass?.let { Log.e("res", it.name) }
-                    Log.e("res",(result.data as ArrayList<MatchResponse>).count().toString())
-                    Toast.makeText(this@MainActivity,result.data.toString(),Toast.LENGTH_LONG).show()
-//                    Log.e("time",Instant.parse((result.data as ArrayList<MatchResponse>).first().created).toString())
-
-                    val cards = (result.data as ArrayList<MatchResponse>).map { el->
-                        MatchCard(el.id, Instant.parse(el.created),el.setCount,el.endType,el.whoServiceFirst, true,el.firstPlayerName,el.secondPlayerName,el.penalties,el.sets,el.points)
-                    }
-                }
-            }
-
-            val intent = Intent(this@MainActivity, ListOfMatches::class.java)
-            startActivity(intent)
-        }
 
 
 
@@ -83,27 +58,28 @@ class MainActivity : AppCompatActivity(){
 //
 //            },3000)
 
-//        lifecycleScope.launchWhenCreated {
-//            while (true){
-//                var result = authService.authenticate()
-//                when(result){
-//                    is AuthResult.Authorized ->{
-//
-//                        pbMain.visibility = View.GONE
-//                        break;
-//                    }
-//                    is AuthResult.Unauthorized -> {
-//                        pbMain.visibility = View.GONE
-//                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
-//                        startActivity(intent)
-//                        break;
-//                    }
-//                    is AuthResult.UnknownError ->{
-//                        Toast.makeText(this@MainActivity,"Проверьте интернет-соединение",Toast.LENGTH_LONG).show()
-//                    }
-//                }
-//            }
-//        }
+        lifecycleScope.launchWhenCreated {
+            while (true){
+                var result = authService.authenticate()
+                when(result){
+                    is AuthResult.Authorized ->{
+                        val intent = Intent(this@MainActivity, ListOfMatches::class.java)
+                        startActivity(intent)
+                        pbMain.visibility = View.GONE
+                        break;
+                    }
+                    is AuthResult.Unauthorized -> {
+                        pbMain.visibility = View.GONE
+                        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        break;
+                    }
+                    is AuthResult.UnknownError ->{
+                        Toast.makeText(this@MainActivity,"Проверьте интернет-соединение",Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
+        }
     }
 
 

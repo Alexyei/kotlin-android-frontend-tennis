@@ -29,7 +29,7 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.signup_layout)
 
-        authService = ServiceManager.getAuthService(getPreferences(MODE_PRIVATE))
+        authService = ServiceManager.getAuthService(getSharedPreferences("token",MODE_PRIVATE))
 
 
         signupButton = findViewById(R.id.signupBtn)
@@ -57,6 +57,8 @@ class SignupActivity : AppCompatActivity() {
                 when (result){
                     is AuthResult.Authorized ->{
                         Toast.makeText(this@SignupActivity,"Вы авторизованы!", Toast.LENGTH_LONG).show()
+                        val intent = Intent(this@SignupActivity, ListOfMatches::class.java)
+                        startActivity(intent)
                     }
                     is AuthResult.Unauthorized ->{
                         errorLabel.text = "Непредвиденная ошибка"

@@ -12,7 +12,7 @@ import retrofit2.HttpException
 import java.time.ZoneId
 
 
-class MatchService(): IMatchService {
+class MatchService(private val prefs: SharedPreferences): IMatchService {
 
     override suspend fun insertOrUpdate(match:MatchCard): MatchResult<Any> {
         return try {
@@ -47,6 +47,42 @@ class MatchService(): IMatchService {
     override suspend fun getAll(): MatchResult<Any> {
         return try {
             val response = RetrofitInstance.matchApi.getAll()
+            Log.e("Response",response.toString())
+            MatchResult.Success(response)
+        } catch(e: HttpException) {
+            if(e.code() == 401) {
+                MatchResult.Unauthorized()
+            } else {
+                MatchResult.WithError(e.response()?.errorBody()?.string())
+            }
+        } catch (e: Exception) {
+
+            MatchResult.WithError("Не удалось подключиться к серверу")
+        }
+    }
+
+    override suspend fun getMyMatches(): MatchResult<Any> {
+        return try {
+            val token = prefs.getString("jwt", null) ?: return MatchResult.Unauthorized()
+            val response = RetrofitInstance.matchApi.getMyMatches("Bearer $token")
+            Log.e("Response",response.toString())
+            MatchResult.Success(response)
+        } catch(e: HttpException) {
+            if(e.code() == 401) {
+                MatchResult.Unauthorized()
+            } else {
+                MatchResult.WithError(e.response()?.errorBody()?.string())
+            }
+        } catch (e: Exception) {
+
+            MatchResult.WithError("Не удалось подключиться к серверу")
+        }
+    }
+
+    override suspend fun deleteMatch(matchId: String): MatchResult<Any> {
+        return try {
+            val token = prefs.getString("jwt", null) ?: return MatchResult.Unauthorized()
+            val response = RetrofitInstance.matchApi.deleteMatch("Bearer $token",matchId)
             Log.e("Response",response.toString())
             MatchResult.Success(response)
         } catch(e: HttpException) {

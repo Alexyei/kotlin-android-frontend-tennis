@@ -1,6 +1,7 @@
 package com.example.android_frontend_tennis
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -23,7 +24,8 @@ import java.util.*
 
 class MatchCardAdapter(
     private val matches: List<MatchCard>,
-    private val onSaveCallback:IOnSaveCB
+    private val onSaveCallback:IOnSaveCB,
+    private val pref:SharedPreferences
 ) : RecyclerView.Adapter<MatchCardAdapter.MatchCardViewHolder>() {
 
     class MatchCardViewHolder(cardView: View) : RecyclerView.ViewHolder(cardView)
@@ -81,7 +83,7 @@ class MatchCardAdapter(
             deleteBtn = ProgressButtonSVG(context, delete_btn )
             saveBtn = ProgressButtonSVG(context, save_btn )
 
-            matchService = ServiceManager.getMatchService()
+            matchService = ServiceManager.getMatchService(pref)
 
 
 //            val sdf = SimpleDateFormat("dd.MM.uuuu HH:mm", Locale.getDefault())

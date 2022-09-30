@@ -17,15 +17,19 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
                     repeat = repeat,
                 )
             )
+
+            Log.e("jwt1", "signup OK")
             signIn(username, password)
+
         } catch(e: HttpException) {
             if(e.code() == 401) {
                 AuthResult.Unauthorized()
             } else {
+                Log.e("jwt1", "else NOT OK")
                 AuthResult.UnknownError(e.response()?.errorBody()?.string())
             }
         } catch (e: Exception) {
-
+            Log.e("jwt1", "sigin NOT OK")
             AuthResult.UnknownError("Не удалось подключиться к серверу")
         }
     }
@@ -38,6 +42,7 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
                     password = password
                 )
             )
+            Log.e("jwt1", response.token)
             prefs.edit()
                 .putString("jwt", response.token)
                 .apply()
@@ -57,6 +62,7 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
 
     override suspend fun authenticate(): AuthResult<Unit> {
         return try {
+            Log.e("jwt", prefs.getString("jwt", null).toString())
             val token = prefs.getString("jwt", null) ?: return AuthResult.Unauthorized()
             RetrofitInstance.authApi.authenticate("Bearer $token")
             AuthResult.Authorized()

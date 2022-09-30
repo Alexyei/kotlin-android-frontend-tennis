@@ -8,7 +8,7 @@ object ServiceManager {
     fun getAuthService(pref: SharedPreferences):AuthService{
         return AuthService(pref)
     }
-    fun getMatchService():MatchService{
-        return MatchService()
+    fun getMatchService(pref: SharedPreferences):MatchService{
+        return MatchService(pref)
     }
 }
