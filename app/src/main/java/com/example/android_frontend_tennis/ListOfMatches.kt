@@ -21,7 +21,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 interface IMatchCardCB {
-    fun onSaveCallback(matchService: MatchService, curMatch: MatchCard, cb: () -> Unit)
+    fun onSaveCallback(matchService: MatchService, curMatch: MatchCard, cb: (success:Boolean) -> Unit)
     fun onDeleteCallback(matchService: MatchService, curMatch: MatchCard, cb: () -> Unit)
 }
 
@@ -110,7 +110,7 @@ class ListOfMatches : AppCompatActivity() {
             override fun onSaveCallback(
                 matchService: MatchService,
                 curMatch: MatchCard,
-                cb: () -> Unit
+                cb: (success:Boolean) -> Unit
             ) {
                 lifecycleScope.launch {
                     var result = matchService.insertOrUpdate(curMatch)
@@ -144,7 +144,7 @@ class ListOfMatches : AppCompatActivity() {
                         }
 
                     }
-                    cb()
+                    cb(result is MatchResult.Success)
                 }
             }
 

@@ -145,8 +145,8 @@ class MatchCardAdapter(
             this.findViewById<View>(R.id.btnMatchCardSave).setOnClickListener(View.OnClickListener { v->
                 blockCard()
                 saveBtn.buttonActivated()
-                onCallback.onSaveCallback(matchService,curMatch) {
-                    curMatch.saved = true;
+                onCallback.onSaveCallback(matchService,curMatch) { it->
+                    curMatch.saved = it;
                     notifyItemChanged(position)
                     saveBtn.buttonFinished()
                     unBlockCard()
