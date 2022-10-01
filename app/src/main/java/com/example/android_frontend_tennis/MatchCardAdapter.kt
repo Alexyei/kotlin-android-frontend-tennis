@@ -24,7 +24,7 @@ import java.util.*
 
 class MatchCardAdapter(
     private val matches: List<MatchCard>,
-    private val onSaveCallback:IOnSaveCB,
+    private val onCallback:IMatchCardCB,
     private val pref:SharedPreferences
 ) : RecyclerView.Adapter<MatchCardAdapter.MatchCardViewHolder>() {
 
@@ -49,25 +49,7 @@ class MatchCardAdapter(
         return holder;
     }
 
-//    fun addMatch(match: MatchCard) {
-//        matches.add(match)
-//        notifyItemInserted(matches.size - 1)
-//    }
 
-//    fun deleteDoneTodos() {
-//        todos.removeAll { todo ->
-//            todo.isChecked
-//        }
-//        notifyDataSetChanged()
-//    }
-
-//    private fun toggleStrikeThrough(tvTodoTitle: TextView, isChecked: Boolean) {
-//        if(isChecked) {
-//            tvTodoTitle.paintFlags = tvTodoTitle.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-//        } else {
-//            tvTodoTitle.paintFlags = tvTodoTitle.paintFlags and Paint.STRIKE_THRU_TEXT_FLAG.inv()
-//        }
-//    }
 
     override fun onBindViewHolder(holder: MatchCardViewHolder, position: Int) {
         val curMatch = matches[position]
@@ -78,8 +60,6 @@ class MatchCardAdapter(
             val save_btn = holder.itemView.findViewById<View>(R.id.btnMatchCardSave)
 
 
-            //"@colors/text",context.getDrawable(R.color.background)
-//            ProgressButton(context,delete_btn,"", context.getDrawable(R.drawable.ic_baseline_delete_outline_24), "white",R.color.background)
             deleteBtn = ProgressButtonSVG(context, delete_btn )
             saveBtn = ProgressButtonSVG(context, save_btn )
 
@@ -104,7 +84,6 @@ class MatchCardAdapter(
 
 
             this.setOnClickListener(View.OnClickListener { v->
-                Toast.makeText(context,"CARD CLICK",Toast.LENGTH_LONG).show()
                 val intent = Intent(context, Match::class.java)
                 intent.putExtra("position", position);
                 startActivity(context,intent,null)
@@ -144,65 +123,30 @@ class MatchCardAdapter(
 
                 blockCard()
                 deleteBtn.buttonActivated()
-                Toast.makeText(context,"DELETE CLICK",Toast.LENGTH_LONG).show()
-                Handler(Looper.getMainLooper()).postDelayed({
 
+                onCallback.onDeleteCallback(matchService,curMatch) {
                     DataObject.deleteData(position)
                     notifyItemChanged(position)
                     deleteBtn.buttonFinished()
                     unBlockCard()
-                },2000)
-
-
-//                setRecycler()
-//                val intent = Intent(context, ListOfMatches::class.java)
-//                startActivity(context,intent,null)
-            })
-
-//            (context as Activity).runOnUiThread(Runnable() {
-            this.findViewById<View>(R.id.btnMatchCardSave).setOnClickListener(View.OnClickListener { v->
-
-
-                blockCard()
-                saveBtn.buttonActivated()
-//                Toast.makeText(context,"SAVE CLICK",Toast.LENGTH_LONG).show()
+                }
+//                Toast.makeText(context,"DELETE CLICK",Toast.LENGTH_LONG).show()
 //                Handler(Looper.getMainLooper()).postDelayed({
 //
-//                    DataObject.updateData(position, true)
+//                    DataObject.deleteData(position)
 //                    notifyItemChanged(position)
-//                    saveBtn.buttonFinished()
+//                    deleteBtn.buttonFinished()
 //                    unBlockCard()
 //                },2000)
-//                GlobalScope.launch {
-//                    var result = matchService.insertOrUpdate(curMatch)
-//
-//                    when (result){
-//                        is MatchResult.InsertedSuccess ->{
-//
-//                            Toast.makeText(context,result.data.toString(),Toast.LENGTH_LONG).show()
-//
-//                            }
-//                        is MatchResult.Unauthorized ->{
-//
-//                                Toast.makeText(context, "Вы не авторизованы", Toast.LENGTH_LONG)
-//                                    .show()
-//                            }
-//                        else->{
-//
-//                                Toast.makeText(context, "Непредвиденная ошибка", Toast.LENGTH_LONG)
-//                                    .show()
-//
-//                            }
-//                    }
-//
-////                    DataObject.updateData(position, true)
-//                    notifyItemChanged(position)
-//                    saveBtn.buttonFinished()
-//                    unBlockCard()
-//
-//
-//            }
-                onSaveCallback.onSaveCallback(matchService,curMatch) {
+
+
+            })
+
+            this.findViewById<View>(R.id.btnMatchCardSave).setOnClickListener(View.OnClickListener { v->
+                blockCard()
+                saveBtn.buttonActivated()
+                onCallback.onSaveCallback(matchService,curMatch) {
+                    curMatch.saved = true;
                     notifyItemChanged(position)
                     saveBtn.buttonFinished()
                     unBlockCard()
@@ -219,8 +163,4 @@ class MatchCardAdapter(
         return matches.size
     }
 
-//    fun getItem(position: Int):MatchCard{
-//
-//        return matches[position]
-//    }
 }

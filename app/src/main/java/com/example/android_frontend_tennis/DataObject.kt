@@ -1,6 +1,7 @@
 package com.example.android_frontend_tennis
 
 
+import android.util.Log
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlin.collections.ArrayList
@@ -8,10 +9,13 @@ import kotlin.collections.ArrayList
 
 object DataObject {
     var listdata = mutableListOf<MatchCard>()
+    var isInit = false;
 
     fun addData(firstPlayerName: String, secondPlayerName: String, setCount:Int, endType:String, whoServiceFirst:Int) {
         val id = null;
+
         val createdAt = Clock.System.now()
+        Log.e("Created at",createdAt.toString())
         val firstPlayerSets = ArrayList<Int>()
         firstPlayerSets.add(0)
         val secondPlayerSets = ArrayList<Int>()

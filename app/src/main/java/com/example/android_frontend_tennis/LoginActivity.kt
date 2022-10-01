@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_layout)
 
-        authService = ServiceManager.getAuthService(getSharedPreferences("token",MODE_PRIVATE))
+        authService = ServiceManager.getAuthService(getSharedPreferences("token", MODE_PRIVATE))
 
         loginButton = findViewById(R.id.btnCreatePenalty)
         registrationLink = findViewById(R.id.tvEndLabel)

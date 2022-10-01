@@ -6,6 +6,7 @@ import retrofit2.http.*
 interface MatchApi {
     @POST("insert-or-update")
     suspend fun insertOrUpdate(
+        @Header("Authorization") token: String,
         @Body request: MatchRequestInsertOrUpdate
     ):Boolean
 

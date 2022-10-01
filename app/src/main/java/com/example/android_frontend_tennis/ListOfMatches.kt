@@ -19,15 +19,18 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.Instant
 import java.util.*
 import kotlin.collections.ArrayList
-interface IOnSaveCB{
-    fun onSaveCallback(matchService: MatchService, curMatch:MatchCard, cb:()->Unit)
+
+interface IMatchCardCB {
+    fun onSaveCallback(matchService: MatchService, curMatch: MatchCard, cb: () -> Unit)
+    fun onDeleteCallback(matchService: MatchService, curMatch: MatchCard, cb: () -> Unit)
 }
+
 class ListOfMatches : AppCompatActivity() {
     private lateinit var btnNewMatch: View;
-    private lateinit var rvMatches:RecyclerView
+    private lateinit var rvMatches: RecyclerView
     private lateinit var matchCardAdapter: MatchCardAdapter
-    private lateinit var loadScreen:ConstraintLayout
-    private lateinit var matchService:MatchService;
+    private lateinit var loadScreen: ConstraintLayout
+    private lateinit var matchService: MatchService;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,57 +40,62 @@ class ListOfMatches : AppCompatActivity() {
         rvMatches = findViewById(R.id.rvMatches)
         loadScreen = findViewById(R.id.loadScreen)
 
-        matchService = ServiceManager.getMatchService(getSharedPreferences("token",MODE_PRIVATE))
+        matchService = ServiceManager.getMatchService(getSharedPreferences("token", MODE_PRIVATE))
 
 
-        ProgressButton(this,btnNewMatch,"Создать матч")
+        ProgressButton(this, btnNewMatch, "Создать матч")
 
-//        Log.e("Init","list init")
-//        matchCardAdapter = MatchCardAdapter(mutableListOf())
-//        matchCardAdapter = GlobalVariables().matchCardAdapter as MatchCardAdapter
-//        matchCardAdapter = GlobalVariablesInstance.getMatchCardAdapterInstance()
-//        rvMatches.adapter =  matchCardAdapter
-//        rvMatches.layoutManager = LinearLayoutManager(this)
 
-        btnNewMatch.setOnClickListener(View.OnClickListener { v->
-//            val match = MatchCard(null, Calendar.getInstance().getTime(),false,Math.random().toString(),"s player",ArrayList<Int>(),ArrayList<Int>(),"15","40")
-//            matchCardAdapter.addMatch(match)
-
-//            Toast.makeText(this,matchCardAdapter.itemCount.toString(),Toast.LENGTH_LONG).show()
-
+        btnNewMatch.setOnClickListener(View.OnClickListener { v ->
             val intent = Intent(this, NewMatch::class.java)
             startActivity(intent)
         })
 
 
-        lifecycleScope.launchWhenCreated {
-            var result = matchService.getAll()
-            when(result){
-                is MatchResult.WithError ->{
-                    Toast.makeText(this@ListOfMatches,"Ошибка подключения",Toast.LENGTH_LONG).show()
+        if (!DataObject.isInit) {
+            lifecycleScope.launchWhenCreated {
+                var result = matchService.getMyMatches()
+                when (result) {
+                    is MatchResult.WithError -> {
+                        Toast.makeText(this@ListOfMatches, "Ошибка подключения", Toast.LENGTH_LONG)
+                            .show()
 
-                }
-                is MatchResult.Unauthorized ->{
-                    Toast.makeText(this@ListOfMatches,"Вы не авторизованы",Toast.LENGTH_LONG).show()
-                    val intent = Intent(this@ListOfMatches, LoginActivity::class.java)
-                    startActivity(intent)
-                }
-                is MatchResult.Success->{
-//                    result.data?.javaClass?.let { Log.e("res", it.name) }
-                    Log.e("res",(result.data as ArrayList<MatchResponse>).count().toString())
-                    Toast.makeText(this@ListOfMatches,result.data.toString(),Toast.LENGTH_LONG).show()
-//                    Log.e("time",Instant.parse((result.data as ArrayList<MatchResponse>).first().created).toString())
+                    }
+                    is MatchResult.Unauthorized -> {
+                        Toast.makeText(this@ListOfMatches, "Вы не авторизованы", Toast.LENGTH_LONG)
+                            .show()
+                        val intent = Intent(this@ListOfMatches, LoginActivity::class.java)
+                        startActivity(intent)
+                    }
+                    is MatchResult.Success -> {
+                        Log.e("res", (result.data as ArrayList<MatchResponse>).count().toString())
+                        val cards = (result.data as ArrayList<MatchResponse>).map { el ->
+                            MatchCard(
+                                el.id,
+                                Instant.parse(el.created),
+                                el.setCount,
+                                el.endType,
+                                el.whoServiceFirst,
+                                true,
+                                el.firstPlayerName,
+                                el.secondPlayerName,
+                                el.penalties,
+                                el.sets,
+                                el.points
+                            )
+                        }
 
-                    val cards = (result.data as ArrayList<MatchResponse>).map { el->
-                        MatchCard(el.id, Instant.parse(el.created),el.setCount,el.endType,el.whoServiceFirst, true,el.firstPlayerName,el.secondPlayerName,el.penalties,el.sets,el.points)
+                        DataObject.listdata = cards.toMutableList();
                     }
                 }
+                DataObject.isInit = true;
+                loadScreen.visibility = View.GONE
+                setRecycler()
             }
-
-            loadScreen.visibility = View.GONE
+        } else {
+            setRecycler()
         }
 
-        setRecycler()
 
     }
 
@@ -96,38 +104,9 @@ class ListOfMatches : AppCompatActivity() {
     }
 
 
-
-//    fun onSaveCallback(matchService: MatchService, curMatch:MatchCard, cb:()->Unit){
-//        lifecycleScope.launch {
-//            var result = matchService.insertOrUpdate(curMatch)
-//
-//            when (result){
-//                is MatchResult.InsertedSuccess ->{
-//
-//                    Toast.makeText(this@ListOfMatches,result.data.toString(),Toast.LENGTH_LONG).show()
-//
-//                }
-//                is MatchResult.Unauthorized ->{
-//
-//                    Toast.makeText(this@ListOfMatches, "Вы не авторизованы", Toast.LENGTH_LONG)
-//                        .show()
-//                }
-//                else->{
-//
-//                    Toast.makeText(this@ListOfMatches, "Непредвиденная ошибка", Toast.LENGTH_LONG)
-//                        .show()
-//
-//                }
-//
-//            }
-//    cb()
-//        }
-//
-//    }
-
-    fun setRecycler(){
-        Log.e("Init","list init")
-        rvMatches.adapter =  MatchCardAdapter(DataObject.getAllData(),object :IOnSaveCB{
+    fun setRecycler() {
+        Log.e("Init", "list init")
+        rvMatches.adapter = MatchCardAdapter(DataObject.getAllData(), object : IMatchCardCB {
             override fun onSaveCallback(
                 matchService: MatchService,
                 curMatch: MatchCard,
@@ -136,20 +115,30 @@ class ListOfMatches : AppCompatActivity() {
                 lifecycleScope.launch {
                     var result = matchService.insertOrUpdate(curMatch)
 
-                    when (result){
-                        is MatchResult.Success ->{
+                    when (result) {
+                        is MatchResult.Success -> {
 
-                            Toast.makeText(this@ListOfMatches,result.data.toString(),Toast.LENGTH_LONG).show()
-
-                        }
-                        is MatchResult.Unauthorized ->{
-
-                            Toast.makeText(this@ListOfMatches, "Вы не авторизованы", Toast.LENGTH_LONG)
+                            Toast.makeText(this@ListOfMatches, "Сохранено", Toast.LENGTH_LONG)
                                 .show()
-                        }
-                        else->{
 
-                            Toast.makeText(this@ListOfMatches, "Непредвиденная ошибка", Toast.LENGTH_LONG)
+                        }
+                        is MatchResult.Unauthorized -> {
+
+                            Toast.makeText(
+                                this@ListOfMatches,
+                                "Вы не авторизованы",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            val intent = Intent(this@ListOfMatches, LoginActivity::class.java)
+                            startActivity(intent)
+                        }
+                        else -> {
+
+                            Toast.makeText(
+                                this@ListOfMatches,
+                                "Непредвиденная ошибка",
+                                Toast.LENGTH_LONG
+                            )
                                 .show()
 
                         }
@@ -159,7 +148,50 @@ class ListOfMatches : AppCompatActivity() {
                 }
             }
 
-        },getPreferences(MODE_PRIVATE))
+            override fun onDeleteCallback(
+                matchService: MatchService,
+                curMatch: MatchCard,
+                cb: () -> Unit
+            ) {
+                lifecycleScope.launch {
+                    if (curMatch.id != null) {
+                        var result = matchService.deleteMatch(curMatch.id!!)
+
+                        when (result) {
+                            is MatchResult.Success -> {
+
+                                Toast.makeText(this@ListOfMatches, "Удалено", Toast.LENGTH_LONG)
+                                    .show()
+
+                            }
+                            is MatchResult.Unauthorized -> {
+
+                                Toast.makeText(
+                                    this@ListOfMatches,
+                                    "Вы не авторизованы",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                val intent = Intent(this@ListOfMatches, LoginActivity::class.java)
+                                startActivity(intent)
+                            }
+                            else -> {
+
+                                Toast.makeText(
+                                    this@ListOfMatches,
+                                    "Непредвиденная ошибка",
+                                    Toast.LENGTH_LONG
+                                )
+                                    .show()
+
+                            }
+
+                        }
+                    }
+                    cb()
+                }
+            }
+
+        }, getSharedPreferences("token", MODE_PRIVATE))
         rvMatches.layoutManager = LinearLayoutManager(this)
     }
 }

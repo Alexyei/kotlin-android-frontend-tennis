@@ -129,21 +129,25 @@ class Match : AppCompatActivity() {
 
 
         btnRemovePointToFirstPlayer.setOnClickListener(View.OnClickListener { v ->
+            currentCard.saved = false;
             removePoint(true)
             rerenderLabels()
         })
 
         btnRemovePointToSecondPlayer.setOnClickListener(View.OnClickListener { v ->
+            currentCard.saved = false;
             removePoint(false)
             rerenderLabels()
         })
 
         btnAddPointToFirstPlayer.setOnClickListener(View.OnClickListener { v ->
+            currentCard.saved = false;
             addPoint(true)
             rerenderLabels()
         })
 
         btnAddPointToSecondPlayer.setOnClickListener(View.OnClickListener { v ->
+            currentCard.saved = false;
             addPoint(false)
             rerenderLabels()
         })

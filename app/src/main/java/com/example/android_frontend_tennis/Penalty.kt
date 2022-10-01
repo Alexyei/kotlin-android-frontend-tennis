@@ -72,6 +72,7 @@ class Penalty : AppCompatActivity() {
 
 
             DataObject.addPenalty(cardPosition, PenaltyClass(cause,penalty,toFirstPlayer))
+            currentCard.saved = false;
 
             val intent = Intent()
             intent.putExtra("penalty position", currentCard.penalties.count() - 1);

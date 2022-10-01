@@ -42,7 +42,7 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
                     password = password
                 )
             )
-            Log.e("jwt1", response.token)
+            Log.e("jwt", response.token)
             prefs.edit()
                 .putString("jwt", response.token)
                 .apply()

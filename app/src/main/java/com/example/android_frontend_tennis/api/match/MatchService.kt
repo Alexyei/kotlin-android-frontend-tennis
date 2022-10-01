@@ -16,8 +16,11 @@ class MatchService(private val prefs: SharedPreferences): IMatchService {
 
     override suspend fun insertOrUpdate(match:MatchCard): MatchResult<Any> {
         return try {
+            Log.e("jwt", prefs.getString("jwt", null).toString())
+            val token = prefs.getString("jwt", null) ?: return MatchResult.Unauthorized()
+
             Log.e("MATCH id", match.id.toString())
-            val response = RetrofitInstance.matchApi.insertOrUpdate(
+            val response = RetrofitInstance.matchApi.insertOrUpdate("Bearer $token",
                 request = MatchRequestInsertOrUpdate(
                     id = match.id.toString(),
                     created = match.created.toString(),
