@@ -114,10 +114,12 @@ class ListOfMatches : AppCompatActivity() {
             ) {
                 lifecycleScope.launch {
                     var result = matchService.insertOrUpdate(curMatch)
-
+//                    Log.e("Результат",result.toString())
+//                    Log.e("Результат",result.data.toString())
                     when (result) {
                         is MatchResult.Success -> {
 
+                            curMatch.id = result.data.toString()
                             Toast.makeText(this@ListOfMatches, "Сохранено", Toast.LENGTH_LONG)
                                 .show()
 

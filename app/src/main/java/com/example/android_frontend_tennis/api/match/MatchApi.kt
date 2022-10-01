@@ -8,7 +8,7 @@ interface MatchApi {
     suspend fun insertOrUpdate(
         @Header("Authorization") token: String,
         @Body request: MatchRequestInsertOrUpdate
-    ):Boolean
+    ):MatchIdResponse
 
     @GET("all-matches")
     suspend fun getAll():ArrayList<MatchResponse>

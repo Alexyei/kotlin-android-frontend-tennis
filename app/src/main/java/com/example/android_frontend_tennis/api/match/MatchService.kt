@@ -33,8 +33,8 @@ class MatchService(private val prefs: SharedPreferences): IMatchService {
                     sets = match.sets,
                     points = match.points
             ));
-            Log.i("Response",response.toString())
-            MatchResult.Success(response)
+            Log.i("Response",response.id)
+            MatchResult.Success(response.id)
         } catch(e: HttpException) {
             if(e.code() == 401) {
                 MatchResult.Unauthorized()
