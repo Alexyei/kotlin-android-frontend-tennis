@@ -124,6 +124,7 @@ class MatchCardAdapter(
                 blockCard()
                 deleteBtn.buttonActivated()
 
+//                в скобочках передаётся третий параметр колбек
                 onCallback.onDeleteCallback(matchService,curMatch) {
                     DataObject.deleteData(position)
                     notifyItemChanged(position)
@@ -145,6 +146,7 @@ class MatchCardAdapter(
             this.findViewById<View>(R.id.btnMatchCardSave).setOnClickListener(View.OnClickListener { v->
                 blockCard()
                 saveBtn.buttonActivated()
+                //                в скобочках передаётся третий параметр колбек
                 onCallback.onSaveCallback(matchService,curMatch) { it->
                     curMatch.saved = it;
                     notifyItemChanged(position)

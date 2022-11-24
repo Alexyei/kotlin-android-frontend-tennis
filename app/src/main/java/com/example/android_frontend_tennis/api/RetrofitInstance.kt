@@ -13,6 +13,8 @@ object RetrofitInstance {
 //        .addConverterFactory(GsonConverterFactory.create())
 //        .build()
 //        .create(TodoApi::class.java)
+
+//        подключаемся к апи при девелопменте localhost заменяется на http://10.0.2.2:8080
     val authApi =
             Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080")

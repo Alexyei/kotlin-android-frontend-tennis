@@ -45,8 +45,11 @@ class SignupActivity : AppCompatActivity() {
             startActivity(intent)
         })
 
+//        нажимаем кнопку зарегистрироваться
         signupButton.setOnClickListener(View.OnClickListener { v->
+//            если форма не валидна, выходим из метода
             if (!validateForm()) return@OnClickListener;
+//            блокируем кнопку, чтобы небыло новых запросов к серверу
                 progressButton.buttonActivated()
 //            val handler = Handler()
 //            handler.postDelayed(Runnable { progressButton.buttonFinished() },3000)
@@ -60,6 +63,8 @@ class SignupActivity : AppCompatActivity() {
                         val intent = Intent(this@SignupActivity, ListOfMatches::class.java)
                         startActivity(intent)
                     }
+                    //                    маршрут на сервере не имеет auth-middleware поэтому он не может вернуть такой результат
+
                     is AuthResult.Unauthorized ->{
                         errorLabel.text = "Непредвиденная ошибка"
                     }

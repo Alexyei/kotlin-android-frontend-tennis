@@ -7,10 +7,12 @@ import kotlinx.datetime.Instant
 import kotlin.collections.ArrayList
 
 
+// DataObject - это локальная БД, она хранит данные о наших матчах, при выходе из приложения данные теряются, поэтому можно сохранить данные на сервере, тогда при входе в приложение они будут загружены обратно
 object DataObject {
     var listdata = mutableListOf<MatchCard>()
     var isInit = false;
 
+//    вызывается при создании матча
     fun addData(firstPlayerName: String, secondPlayerName: String, setCount:Int, endType:String, whoServiceFirst:Int) {
         val id = null;
 

@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         loginEditText = findViewById(R.id.etFirstPlayerName)
         passwordEditText = findViewById(R.id.etSecondPlayerName)
 
+//        переход к форме регистрации
         registrationLink.setOnClickListener(View.OnClickListener { v->
             val intent = Intent(this, SignupActivity::class.java)
             startActivity(intent)
@@ -43,12 +44,17 @@ class LoginActivity : AppCompatActivity() {
 
         val progressButton = ProgressButton(this@LoginActivity,loginButton,"Войти")
 
+//        нажимаем на кнопку войти
         loginButton.setOnClickListener(View.OnClickListener { v->
 
+//            валидируем форму, если форма не валидна выводим сообщение и выходим из метода
             if (!validateForm()) return@OnClickListener;
+//            блокируем кнопку, чтобы нельзя было нажать повторно (чтобы не было лишних запросов на сервер)
             progressButton.buttonActivated()
 //            val handler = Handler()
 //            handler.postDelayed(Runnable { progressButton.buttonFinished() },3000)
+
+//            в случае успешное авторизации переходим к списку матчей
             lifecycleScope.launch{
                 var result = authService.signIn(loginEditText.text.toString(), passwordEditText.text.toString())
 
@@ -58,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
                         val intent = Intent(this@LoginActivity, ListOfMatches::class.java)
                         startActivity(intent)
                     }
+//                    маршрут на сервере не имеет auth-middleware поэтому он не может вернуть такой результат
                     is AuthResult.Unauthorized ->{
                         errorLabel.text = "Непредвиденная ошибка"
                     }

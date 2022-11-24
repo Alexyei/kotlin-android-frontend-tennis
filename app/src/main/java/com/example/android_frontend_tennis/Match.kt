@@ -45,6 +45,7 @@ class Match : AppCompatActivity() {
     private lateinit var currentCard: MatchCard;
     private var cardPosition: Int = -1;
 
+//    переходим к форме создания штрафа и возвращаем из неё значение
     val getPenalty = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
         val penalty = it?.data?.getIntExtra("penalty position",-1)
 //        Toast.makeText(this,penalty,Toast.LENGTH_LONG).show()
@@ -152,10 +153,12 @@ class Match : AppCompatActivity() {
             rerenderLabels()
         })
 
+//        запускаем-останавливаем таймер подачи
         btnStartServing.setOnClickListener(View.OnClickListener { v ->
             startStopServingTimer()
         })
 
+//        назначаем штраф
         btnCreatePenalty.setOnClickListener(View.OnClickListener { v ->
 
             if (!isMatchOver()) {
@@ -268,6 +271,7 @@ class Match : AppCompatActivity() {
         return result;
     }
 
+//    проверяем завершился ли финальный сет
     fun longGameIsOver(): Boolean {
 
         if (currentCard.endType == "+2 games") {
@@ -300,6 +304,7 @@ class Match : AppCompatActivity() {
         return false;
     }
 
+//    определяем завершился матч или нет
     fun isMatchOver(): Boolean {
 
         //CHECK DISQUALIFICATION
@@ -394,13 +399,14 @@ class Match : AppCompatActivity() {
             rerenderMessageLabel()
             enablePlusBtns()
 
-
+//если матч завершён отключаем кнопки добавления очков
         } else {
             resetServiceLabel()
             renderWinner()
             disablePlusBtns()
         }
 
+//        если это первое очко этключаем кнопки удаления очков
         if (isFirstPoint()) {
             disableMinusBtns()
         } else {

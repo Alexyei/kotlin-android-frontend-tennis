@@ -38,7 +38,11 @@ class MainActivity : AppCompatActivity(){
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        получаем jwt-токен из файла настроек и создаём authService
+//        token - это название файла настроек
         authService = ServiceManager.getAuthService(getSharedPreferences("token",MODE_PRIVATE))
+        //        получаем jwt-токен из файла настроек и создаём matchService
         matchService = ServiceManager.getMatchService(getSharedPreferences("token",MODE_PRIVATE))
         pbMain = findViewById(R.id.pbMain)
 
@@ -58,6 +62,9 @@ class MainActivity : AppCompatActivity(){
 //
 //            },3000)
 
+//        если мы успшено авторизовались переходим к списку наших матчей
+//        если нет (токен просрочен или неверен) переходим к форме входа
+//        если не можем связаться с сервером, выводим сообщение: проверьте интернет-соединение
         lifecycleScope.launchWhenCreated {
             while (true){
                 var result = authService.authenticate()

@@ -46,12 +46,15 @@ class ListOfMatches : AppCompatActivity() {
         ProgressButton(this, btnNewMatch, "Создать матч")
 
 
+//        переход к форме создания нового матча
         btnNewMatch.setOnClickListener(View.OnClickListener { v ->
             val intent = Intent(this, NewMatch::class.java)
             startActivity(intent)
         })
 
 
+//   когда мы заходим в активити ListOfMatches DataObject не инициализирован (не содержит матчей)
+//   попробуем загрузить матчи с сервера, если мы их раньше там сохраняли
         if (!DataObject.isInit) {
             lifecycleScope.launchWhenCreated {
                 var result = matchService.getMyMatches()
@@ -99,11 +102,13 @@ class ListOfMatches : AppCompatActivity() {
 
     }
 
+//    отключаем кнопку вернуться назад, потому что это основная форма приложения
     override fun onBackPressed() {
         // Do Here what ever you want do on back press;
     }
 
 
+//    запускаем список матчей
     fun setRecycler() {
         Log.e("Init", "list init")
         rvMatches.adapter = MatchCardAdapter(DataObject.getAllData(), object : IMatchCardCB {
@@ -119,6 +124,8 @@ class ListOfMatches : AppCompatActivity() {
                     when (result) {
                         is MatchResult.Success -> {
 
+//                            первый раз сохраняя матч, у него нет id, он создаётся на сервере и возврщает свой id
+//                            при следующих сохранениях он обновляется используя свой id
                             curMatch.id = result.data.toString()
                             Toast.makeText(this@ListOfMatches, "Сохранено", Toast.LENGTH_LONG)
                                 .show()

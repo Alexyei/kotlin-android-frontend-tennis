@@ -19,6 +19,7 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
             )
 
             Log.e("jwt1", "signup OK")
+//            после регистрации, выполняем вход, чтобы получить jwt-токен
             signIn(username, password)
 
         } catch(e: HttpException) {
@@ -42,7 +43,9 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
                     password = password
                 )
             )
+//            при успешном входе, получаем токен
             Log.e("jwt", response.token)
+//            сохраняем его в настройки
             prefs.edit()
                 .putString("jwt", response.token)
                 .apply()
@@ -60,6 +63,7 @@ class AuthService(private val prefs: SharedPreferences): IAuthService {
         }
     }
 
+//    попытка неявной авторизации в MainActivity
     override suspend fun authenticate(): AuthResult<Unit> {
         return try {
             Log.e("jwt", prefs.getString("jwt", null).toString())

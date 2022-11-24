@@ -33,6 +33,7 @@ class NewMatch : AppCompatActivity() {
 
         tvNewMatchErrorText.text = ""
 
+//        создаём матч
         btnCreateMatch.setOnClickListener(View.OnClickListener { v->
             if (!validateForm())return@OnClickListener;
             val setCount = getSetCount()
@@ -44,6 +45,7 @@ class NewMatch : AppCompatActivity() {
 
             DataObject.addData(firstPlayerName,secondPlayerName,setCount,endType,whoServiceFirst)
 
+//            после создания матча переходим к списку матчей
             val intent = Intent(this, ListOfMatches::class.java)
             startActivity(intent)
 //            Toast.makeText(this@NewMatch,"$setCount:$end:$firstPlayerName:$secondPlayerName",Toast.LENGTH_LONG).show()
